@@ -11,6 +11,7 @@ class Stem {
         this.constraints = [];
         this.world = options.world;
         this.ctx = options.ctx;
+        this.color = options.color;
 
         this.build();
     }
@@ -51,7 +52,7 @@ class Stem {
     }
 
     render() {
-        this.ctx.strokeStyle = '#a9ba7b';
+        this.ctx.strokeStyle = this.color;
         this.ctx.lineWidth = 5;
         this.ctx.beginPath();
         this.ctx.moveTo(this.start.position.x, this.start.position.y);

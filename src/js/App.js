@@ -2,6 +2,7 @@
 import { Engine, Events, Render } from 'matter-js';
 import Plant from './Plant';
 import Mouse from './Mouse';
+import niceColorPalettes from './niceColors';
 
 class App {
     constructor() {
@@ -11,6 +12,7 @@ class App {
         this.canvas = null;
         this.ctx = null;
         this.plant = null;
+        this.palette = niceColorPalettes[Math.floor(Math.random() * niceColorPalettes.length)];
 
         this.initPhysics();
         this.initGraphics();
@@ -33,7 +35,9 @@ class App {
         });
 
         Events.on(this.engine, 'afterUpdate', () => {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.fillStyle = this.palette[0];
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
             this.plant.update();
             this.plant.render();
         });
@@ -51,10 +55,11 @@ class App {
             ctx: this.ctx,
             x: this.canvas.width / 2,
             y: this.canvas.height - 100,
-            length: 250,
             XDistance: 400,
             YDistance: 200,
             world: this.engine.world,
+            color: this.palette[1],
+            branchesCount: 3 + Math.floor(Math.random() * 10),
         });
     }
 
@@ -65,7 +70,7 @@ class App {
 
     run() {
         Engine.run(this.engine);
-        Render.run(this.render);
+        // Render.run(this.render);
     }
 }
 

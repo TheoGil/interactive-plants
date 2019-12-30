@@ -1,12 +1,6 @@
 import getQuadraticCurvePoint from './getQuadraticCurvePoint';
 import mapRange from './mapRange';
-
-// Returns the angle in degrees between two points
-// a: { x: x, y: y }
-// b: { x: x, y: y }
-function getAngle(a, b) {
-    return Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
-}
+import Leaf from './Leaf';
 
 class Branch {
     constructor(options) {
@@ -14,17 +8,16 @@ class Branch {
         this.y = options.y;
         this.ctx = options.ctx;
         this.position = options.position;
+        this.angle = 0;
+        this.referenceLeafLength = 100;
+        this.garnements = [];
+        this.leavesColor = options.leavesColor,
 
-        // Use a parametric function to compute the length of the vein
-        const leafShape = 1; // Tweeak this value to change the shape of the leaf
-        const position = mapRange(this.position, 0, 1, -.9, .9);
-        this.leafLengthMultiplier =  Math.pow(Math.cos(Math.PI * position / 2), leafShape);
-
-        this.veinAngle = 130;
-        this.leafLength = 100 * this.leafLengthMultiplier;
+        this.initGarnements();
     }
 
-    update(start, ctrl, end) {
+    update(start, ctrl, end, angle) {
+        // Update this branch position based on the stem's curve
         const point = getQuadraticCurvePoint(
             start.x,
             start.y,
@@ -36,13 +29,44 @@ class Branch {
         );
         this.x = point.x;
         this.y = point.y;
+
+        // Update the garnements with the new position
+        this.garnements.forEach((garnement) => { garnement.update(this.x, this.y, angle); });
     }
 
     render() {
-        this.ctx.fillStyle = 'red';
-        this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, 5, 0, 2 * Math.PI);
-        this.ctx.fill();
+        this.garnements.forEach((garnement) => { garnement.render(); });
+    }
+
+    initGarnements() {
+        const leftLeaf = new Leaf({
+            x: this.x,
+            y: this.y,
+            ctx: this.ctx,
+            angle: -40,
+            length: this.computeLeafLengthBasedOnPosition(),
+            maxLength: this.referenceLeafLength,
+            color: this.leavesColor,
+        });
+
+        this.garnements.push(leftLeaf);
+
+        const rightLeaf = new Leaf({
+            x: this.x,
+            y: this.y,
+            ctx: this.ctx,
+            angle: 40,
+            length: this.computeLeafLengthBasedOnPosition(),
+            maxLength: this.referenceLeafLength,
+            color: this.leavesColor,
+        });
+
+        this.garnements.push(rightLeaf);
+    }
+
+    computeLeafLengthBasedOnPosition() {
+        const leafShape = 1.5;
+        return this.referenceLeafLength * (1 - Math.pow(Math.abs(mapRange(this.position, 0, 1, -.8, .8)), leafShape));
     }
 }
 

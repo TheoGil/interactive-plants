@@ -1,6 +1,7 @@
 import Stem from './Stem.js';
 import Branch from './Branch';
 import mapRange from './mapRange';
+import getAngle from './getAngle';
 
 class Plant {
     constructor(options) {
@@ -11,7 +12,8 @@ class Plant {
         this.XDistance = options.XDistance || 200;
         this.YDistance = options.YDistance || 200;
         this.world = options.world;
-        this.branchesCount = options.branchesCount || 4;
+        this.branchesCount = options.branchesCount || 10;
+        this.color = options.color || '#a9ba7b';
         
         this.stem = null;
         this.branches = null;
@@ -28,6 +30,7 @@ class Plant {
             XDistance: this.XDistance,
             YDistance: this.YDistance,
             world: this.world,
+            color: this.color,
         });
 
         this.branches = [];
@@ -39,6 +42,7 @@ class Plant {
                 ctx: this.ctx,
                 position,
                 branchesCount: this.branchesCount,
+                leavesColor: this.color,
             }));
         }
     } 
@@ -50,7 +54,12 @@ class Plant {
         this.stem.render();
 
         this.branches.forEach((branch, i) => {
-            branch.update(this.stem.start.position, this.stem.ctrl.position, this.stem.end.position);
+            // Compute the branche new angle based on the stem's curvature
+            const nextPoint = this.branches[i + 1] ? this.branches[i + 1] : { x: this.x, y: this.y };
+            const newAngle = getAngle(nextPoint, branch);
+
+            branch.update(this.stem.start.position, this.stem.ctrl.position, this.stem.end.position, newAngle);
+
             branch.render();
         });
     }
