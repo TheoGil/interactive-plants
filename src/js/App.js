@@ -12,11 +12,13 @@ class App {
         this.canvas = null;
         this.ctx = null;
         this.plant = null;
-        this.palette = niceColorPalettes[Math.floor(Math.random() * niceColorPalettes.length)];
+        this.palette = null;
 
+        this.initColorPalette();
         this.initPhysics();
         this.initGraphics();
         this.initComponents();
+
     }
 
     initPhysics() {
@@ -51,6 +53,14 @@ class App {
             el: this.canvas,
         });
 
+        this.initPlant();
+    }
+
+    initColorPalette() {
+        this.palette = niceColorPalettes[Math.floor(Math.random() * niceColorPalettes.length)];
+    }
+
+    initPlant() {
         this.plant = new Plant({
             ctx: this.ctx,
             x: this.canvas.width / 2,

@@ -14,3 +14,11 @@ canvas {
     top: 0;
     left: 0;
 }
+
+#rerun {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    font-size: 20px;
+    z-index: 20;
+}
