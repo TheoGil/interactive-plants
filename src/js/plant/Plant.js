@@ -1,7 +1,7 @@
 import Stem from './Stem.js';
 import Branch from './Branch';
-import mapRange from './mapRange';
-import getAngle from './getAngle';
+import mapRange from '../utils/mapRange';
+import getAngle from '../utils/getAngle';
 
 class Plant {
     constructor(options) {
@@ -14,6 +14,9 @@ class Plant {
         this.world = options.world;
         this.branchesCount = options.branchesCount || 10;
         this.color = options.color || '#a9ba7b';
+        this.garnementsStructure = options.garnementsStructure;
+        this.garnementsTypes = options.garnementsTypes;
+        this.stemWidth = options.stemWidth || 5;
         
         this.stem = null;
         this.branches = null;
@@ -31,7 +34,9 @@ class Plant {
             YDistance: this.YDistance,
             world: this.world,
             color: this.color,
+            width: this.stemWidth,
         });
+
 
         this.branches = [];
         for (let i = this.branchesCount; i > 0; i--) {
@@ -43,6 +48,12 @@ class Plant {
                 position,
                 branchesCount: this.branchesCount,
                 leavesColor: this.color,
+                berriesColor: this.color,
+                garnementsStructure: this.garnementsStructure,
+                garnementsTypes: this.garnementsTypes,
+                isEven: i % 2 === 0,
+                index: i,
+                stemWidth: this.stemWidth,
             }));
         }
     } 

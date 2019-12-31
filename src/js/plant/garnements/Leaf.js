@@ -1,22 +1,13 @@
-import mapRange from "./mapRange";
+import Garnement from './Garnement';
+import mapRange from "./../../utils/mapRange";
 
-class Leaf {
+class Leaf extends Garnement {
     constructor(options) {
-        this.x = options.x;
-        this.y = options.y;
-        this.ctx = options.ctx;
-        this.initialAngle = options.angle;
-        this.relativeAngle = 0;
+        super(options);
+
         this.length = options.length;
         this.maxLength = options.maxLength;
         this.thickness = (options.thickness || 20) * mapRange(this.length, 0, this.maxLength, .2, 1);
-        this.fill = options.color;
-    }
-
-    update(newX, newY, angle) {
-        this.x = newX;
-        this.y = newY;
-        this.relativeAngle = angle;
     }
 
     render() {

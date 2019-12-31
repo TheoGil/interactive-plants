@@ -1,8 +1,9 @@
 
 import { Engine, Events, Render } from 'matter-js';
-import Plant from './Plant';
+import Plant from './plant/Plant';
 import Mouse from './Mouse';
-import niceColorPalettes from './niceColors';
+import niceColorPalettes from './utils/niceColors';
+import pickRandomElementsFromArray from './utils/pickRandomElementsFromArray';
 
 class App {
     constructor() {
@@ -61,6 +62,9 @@ class App {
     }
 
     initPlant() {
+        const garnementsStructure = ['symmetrical', 'alternate', 'random'][Math.floor(Math.random() * 3)];
+        const garnementsType = ['leaves', 'berries', 'flowers', 'bells'];
+
         this.plant = new Plant({
             ctx: this.ctx,
             x: this.canvas.width / 2,
@@ -70,6 +74,9 @@ class App {
             world: this.engine.world,
             color: this.palette[1],
             branchesCount: 3 + Math.floor(Math.random() * 10),
+            garnementsStructure: 'symmetrical',
+            // garnementsTypes: pickRandomElementsFromArray(garnementsType, Math.floor(Math.random() * garnementsType.length))
+            garnementsTypes: ['berries'],
         });
     }
 

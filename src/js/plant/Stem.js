@@ -12,6 +12,7 @@ class Stem {
         this.world = options.world;
         this.ctx = options.ctx;
         this.color = options.color;
+        this.width = options.width || 5;
 
         this.build();
     }
@@ -53,7 +54,7 @@ class Stem {
 
     render() {
         this.ctx.strokeStyle = this.color;
-        this.ctx.lineWidth = 5;
+        this.ctx.lineWidth = this.width;
         this.ctx.beginPath();
         this.ctx.moveTo(this.start.position.x, this.start.position.y);
         this.ctx.quadraticCurveTo(
