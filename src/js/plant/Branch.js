@@ -78,6 +78,14 @@ class Branch {
                     stemWidth: this.stemWidth,
                     fill: this.berriesColor,
                 }));
+                this.garnements.push(new Berry({
+                    x: this.x,
+                    y: this.y,
+                    ctx: this.ctx,
+                    angle: -90,
+                    stemWidth: this.stemWidth,
+                    fill: this.berriesColor,
+                }));
             break;
         }
 
