@@ -6,10 +6,10 @@ class Flower extends Garnement {
         super(options);
         this.length = options.length;
         this.maxLength = options.maxLength;
-        this.thickness = 20;
-        this.radius = 10;
+        this.radius = options.radius;
         this.stroke = options.stroke;
         this.fill = options.fill;
+        this.strokeWidth = options.strokeWidth;;
     }
 
     render() {
@@ -31,6 +31,7 @@ class Flower extends Garnement {
 
         // Draw flower
         this.ctx.lineWidth = 5;
+        this.ctx.strokeWidth = this.strokeWidth;
         if (this.initialAngle < 0) {
             circle(this.ctx, this.x - this.length, this.y - this.length, this.radius, this.fill, this.stroke);
         } else {

@@ -14,10 +14,16 @@ class Plant {
         this.world = options.world;
         this.branchesCount = options.branchesCount || 10;
         this.stemColor = options.stemColor;
+        this.stemWidth = options.stemWidth;
         this.leavesColor = options.leavesColor;
+        this.leavesLength = options.leavesLength;
+        this.leavesThickness = options.leavesThickness;
         this.berriesColor = options.berriesColor;
+        this.berriesRadius = options.berriesRadius;
         this.flowerColor1 = options.flowerColor1;
         this.flowerColor2 = options.flowerColor2;
+        this.flowerRadius = options.flowerRadius;
+        this.flowerStrokeWidth = options.flowerStrokeWidth;
         this.garnementsStructure = options.garnementsStructure;
         this.garnementsTypes = options.garnementsTypes;
         this.stemWidth = options.stemWidth || 5;
@@ -52,9 +58,14 @@ class Plant {
                 position,
                 branchesCount: this.branchesCount,
                 leavesColor: this.leavesColor,
+                leavesLength: this.leavesLength,
+                leavesThickness: this.leavesThickness,
                 berriesColor: this.berriesColor,
+                berriesRadius: this.berriesRadius,
                 flowerColor1: this.flowerColor1,
                 flowerColor2: this.flowerColor2,
+                flowerRadius: this.flowerRadius,
+                flowerStrokeWidth: this.flowerStrokeWidth,
                 garnementsStructure: this.garnementsStructure,
                 garnementsTypes: this.garnementsTypes,
                 isEven: i % 2 === 0,

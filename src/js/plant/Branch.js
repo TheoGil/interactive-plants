@@ -11,12 +11,16 @@ class Branch {
         this.ctx = options.ctx;
         this.position = options.position;
         this.angle = 0;
-        this.referenceLeafLength = 100;
+        this.referenceLeafLength = options.leavesLength;
         this.garnements = [];
         this.leavesColor = options.leavesColor,
+        this.leavesThickness = options.leavesThickness;
         this.berriesColor = options.berriesColor,
+        this.berriesRadius = options.berriesRadius,
         this.flowerColor1 = options.flowerColor1,
         this.flowerColor2 = options.flowerColor2,
+        this.flowerRadius = options.flowerRadius;
+        this.flowerStrokeWidth = options.flowerStrokeWidth;
         this.garnementsStructure = options.garnementsStructure;
         this.garnementsTypes = options.garnementsTypes;
         this.isEven = options.isEven;
@@ -81,6 +85,7 @@ class Branch {
                     angle: 90,
                     stemWidth: this.stemWidth,
                     fill: this.berriesColor,
+                    radius: this.berriesRadius,
                 }));
                 this.garnements.push(new Berry({
                     x: this.x,
@@ -89,6 +94,7 @@ class Branch {
                     angle: -90,
                     stemWidth: this.stemWidth,
                     fill: this.berriesColor,
+                    radius: this.berriesRadius,
                 }));
             break;
             case 'leaves':
@@ -99,6 +105,7 @@ class Branch {
                     angle: -40,
                     length: this.computeLeafLengthBasedOnPosition(),
                     maxLength: this.referenceLeafLength,
+                    thickness: this.leavesThickness,
                     color: this.leavesColor,
                 }));
                 this.garnements.push(new Leaf({
@@ -109,6 +116,7 @@ class Branch {
                     length: this.computeLeafLengthBasedOnPosition(),
                     maxLength: this.referenceLeafLength,
                     color: this.leavesColor,
+                    thickness: this.leavesThickness,
                 }));
             break;
             case 'flowers':
@@ -121,6 +129,8 @@ class Branch {
                     maxLength: this.referenceLeafLength,
                     stroke: this.flowerColor1,
                     fill: this.flowerColor2,
+                    radius: this.flowerRadius,
+                    strokeWidth: this.flowerRadius,
                 }));
                 this.garnements.push(new Flower({
                     x: this.x,
@@ -131,6 +141,8 @@ class Branch {
                     maxLength: this.referenceLeafLength,
                     stroke: this.flowerColor1,
                     fill: this.flowerColor2,
+                    radius: this.flowerRadius,
+                    strokeWidth: this.flowerRadius,
                 }));
             break;
         }
@@ -148,6 +160,7 @@ class Branch {
                     angle: 90,
                     stemWidth: this.stemWidth,
                     fill: this.berriesColor,
+                    radius: this.berriesRadius,
                 }));
             break;
             case 'leaves':
@@ -159,6 +172,7 @@ class Branch {
                     length: this.computeLeafLengthBasedOnPosition(),
                     maxLength: this.referenceLeafLength,
                     color: this.leavesColor,
+                    thickness: this.leavesThickness,
                 }));
             break;
             case 'flowers':
@@ -171,6 +185,8 @@ class Branch {
                     maxLength: this.referenceLeafLength,
                     stroke: this.flowerColor1,
                     fill: this.flowerColor2,
+                    radius: this.flowerRadius,
+                    strokeWidth: this.flowerRadius,
                 }));
             break;
         }

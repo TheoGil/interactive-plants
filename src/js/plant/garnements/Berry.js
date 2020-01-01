@@ -4,7 +4,7 @@ import circle from '../../utils/circle';
 class Berry extends Garnement {
     constructor(options) {
         super(options);
-        this.radius = 10;
+        this.radius = options.radius;
         this.stemWidth = options.stemWidth;
         this.fill = options.fill;
     }

@@ -12,7 +12,7 @@ class Stem {
         this.world = options.world;
         this.ctx = options.ctx;
         this.color = options.color;
-        this.width = options.width || 5;
+        this.width = options.width;
 
         this.build();
     }
@@ -45,7 +45,7 @@ class Stem {
         this.constraints.push(Constraint.create({
             bodyA: previousPoint,
             bodyB: point,
-            stiffness: 0.01,
+            stiffness: 1,
             damping: .5,
         }));
 
