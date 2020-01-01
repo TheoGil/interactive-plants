@@ -13,7 +13,11 @@ class Plant {
         this.YDistance = options.YDistance || 200;
         this.world = options.world;
         this.branchesCount = options.branchesCount || 10;
-        this.color = options.color || '#a9ba7b';
+        this.stemColor = options.stemColor;
+        this.leavesColor = options.leavesColor;
+        this.berriesColor = options.berriesColor;
+        this.flowerColor1 = options.flowerColor1;
+        this.flowerColor2 = options.flowerColor2;
         this.garnementsStructure = options.garnementsStructure;
         this.garnementsTypes = options.garnementsTypes;
         this.stemWidth = options.stemWidth || 5;
@@ -33,7 +37,7 @@ class Plant {
             XDistance: this.XDistance,
             YDistance: this.YDistance,
             world: this.world,
-            color: this.color,
+            color: this.stemColor,
             width: this.stemWidth,
         });
 
@@ -47,13 +51,16 @@ class Plant {
                 ctx: this.ctx,
                 position,
                 branchesCount: this.branchesCount,
-                leavesColor: this.color,
-                berriesColor: this.color,
+                leavesColor: this.leavesColor,
+                berriesColor: this.berriesColor,
+                flowerColor1: this.flowerColor1,
+                flowerColor2: this.flowerColor2,
                 garnementsStructure: this.garnementsStructure,
                 garnementsTypes: this.garnementsTypes,
                 isEven: i % 2 === 0,
                 index: i,
                 stemWidth: this.stemWidth,
+                distance: (this.YDistance * 2) / this.branchesCount,
             }));
         }
     } 

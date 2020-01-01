@@ -63,7 +63,9 @@ class App {
 
     initPlant() {
         const garnementsStructure = ['symmetrical', 'alternate', 'random'][Math.floor(Math.random() * 3)];
-        const garnementsType = ['leaves', 'berries', 'flowers', 'bells'];
+        const garnementsType = ['leaves', 'berries', 'flowers'];
+        const garnementsTypes = pickRandomElementsFromArray(garnementsType, Math.ceil(Math.random() * garnementsType.length));
+        console.log('1 - ', garnementsTypes);
 
         this.plant = new Plant({
             ctx: this.ctx,
@@ -72,11 +74,17 @@ class App {
             XDistance: 400,
             YDistance: 200,
             world: this.engine.world,
-            color: this.palette[1],
-            branchesCount: 3 + Math.floor(Math.random() * 10),
+            stemColor: this.palette[1],
+            leavesColor: this.palette[1],
+            berriesColor: this.palette[2],
+            flowerColor1: this.palette[3],
+            flowerColor2: this.palette[4],
+            branchesCount: 1 + Math.floor(Math.random() * 10),
+            // garnementsStructure: 'alternate',
             garnementsStructure: 'symmetrical',
-            // garnementsTypes: pickRandomElementsFromArray(garnementsType, Math.floor(Math.random() * garnementsType.length))
-            garnementsTypes: ['berries'],
+            garnementsTypes,
+            // garnementsTypes: ['flowers'],
+
         });
     }
 
