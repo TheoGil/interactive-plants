@@ -1,5 +1,5 @@
 
-import { Engine, Events, Render } from 'matter-js';
+import { Engine, Events, Render, World } from 'matter-js';
 import Plant from './plant/Plant';
 import Mouse from './Mouse';
 import niceColorPalettes from './utils/niceColors';
@@ -12,7 +12,7 @@ class App {
         this.debugCanvas = null;
         this.canvas = null;
         this.ctx = null;
-        this.plant = null;
+        this.plants = [];
         this.palette = null;
 
         this.initColorPalette();
@@ -41,8 +41,10 @@ class App {
             this.ctx.fillStyle = this.palette[0];
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-            this.plant.update();
-            this.plant.render();
+            this.plants.forEach((plant) => {
+                plant.update();
+                plant.render();
+            });
         });
 
         this.fitCanvasToWindow();
@@ -62,32 +64,48 @@ class App {
     }
 
     initPlant() {
-        const garnementsStructure = ['symmetrical', 'alternate', 'random'][Math.floor(Math.random() * 3)];
-        const garnementsType = ['leaves', 'berries', 'flowers'];
-        const garnementsTypes = pickRandomElementsFromArray(garnementsType, Math.ceil(Math.random() * garnementsType.length));
+        this.plants.forEach((plant) => {
+            plant.stem.constraints.forEach((con) => {
+                World.remove(this.engine.world, con);
+            });
 
-        this.plant = new Plant({
-            ctx: this.ctx,
-            x: this.canvas.width / 2,
-            y: this.canvas.height - 100,
-            XDistance: 200,
-            YDistance: 100,
-            world: this.engine.world,
-            stemColor: this.palette[1],
-            stemWidth: 2,
-            leavesColor: this.palette[1],
-            leavesLength: 100,
-            leavesThickness: 20,
-            berriesColor: this.palette[2],
-            berriesRadius: 5,
-            flowerColor1: this.palette[3],
-            flowerColor2: this.palette[4],
-            flowerRadius: 10,
-            flowerStrokeWidth: 8,
-            branchesCount: 1 + Math.floor(Math.random() * 10),
-            garnementsStructure,
-            garnementsTypes,
+            World.remove(this.engine.world, plant.stem.start);
+            World.remove(this.engine.world, plant.stem.end);
+            World.remove(this.engine.world, plant.stem.ctrl);
         });
+        this.plants = [];
+        for (let i = 0; i < 4; i++) {
+            this.initColorPalette();
+            
+            for (let x = 0; x < innerWidth; x += 50 + Math.random() * 50) {
+                const garnementsStructure = ['symmetrical', 'alternate', 'random'][Math.floor(Math.random() * 3)];
+                const garnementsType = ['leaves', 'berries', 'flowers'];
+                const garnementsTypes = pickRandomElementsFromArray(garnementsType, Math.ceil(Math.random() * garnementsType.length));
+        
+                this.plants.push(new Plant({
+                    ctx: this.ctx,
+                    x,
+                    y: this.canvas.height - 100,
+                    XDistance: 40,
+                    YDistance: 20 + Math.random() * 60,
+                    world: this.engine.world,
+                    stemColor: this.palette[1],
+                    stemWidth: 2,
+                    leavesColor: this.palette[1],
+                    leavesLength: 40,
+                    leavesThickness: 10,
+                    berriesColor: this.palette[2],
+                    berriesRadius: 3,
+                    flowerColor1: this.palette[3],
+                    flowerColor2: this.palette[4],
+                    flowerRadius: 5,
+                    flowerStrokeWidth: 3,
+                    branchesCount: 1 + Math.floor(Math.random() * 5),
+                    garnementsStructure,
+                    garnementsTypes,
+                }));
+            }
+        }
     }
 
     fitCanvasToWindow() {
